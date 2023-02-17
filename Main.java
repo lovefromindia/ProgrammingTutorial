@@ -1,18 +1,29 @@
 //visibility can only increase in inheritance and be decreased
 
-class Main{
+class Main {
+
     public static void main(String[] args) {
+
         C obj = new C();
-        System.out.printf(obj.sing());
+
+        System.out.println(args.length);
+
     }
+
 }
 
-abstract class B{
+abstract class B {
+
     protected abstract String sing();
+
 }
 
-class C extends B{
-     public String sing(){
+class C extends B {
+
+    public String sing() {
+
         return "I am singing";
+
     }
+
 }
