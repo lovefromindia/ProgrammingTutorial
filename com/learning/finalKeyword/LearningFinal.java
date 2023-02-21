@@ -9,6 +9,8 @@ public class LearningFinal {
 
     final static String name = getName();
 
+    final static StringBuilder str = new StringBuilder("Mihir");
+
     public static void main(String[] args) {
 
 //        System.out.print("Name: " + name.intern() + (name == "Hello") + " " + age + " " + size);
@@ -16,6 +18,12 @@ public class LearningFinal {
         System.out.print("Name: " + (name == "Hello") + " " + age + " " + size);
 
         System.out.println("Hello".getClass());
+
+        System.out.println(str);
+
+        str.append(" L. Agrawal");
+
+        System.out.println(str);
 
     }
 

@@ -18,9 +18,9 @@ public class LearningSwitchCase {
 
                 break;
 
-            case "Jav":
+            case "Java":
 
-                System.out.println("Good one");
+                System.out.println("Good one but cpp is still GOAT");
 
                 break;
 

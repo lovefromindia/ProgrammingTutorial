@@ -1,5 +1,7 @@
 package com.learning.string;
 
+import java.util.Arrays;
+
 public class LearningString {
 
     public static void main(String[] args) {
@@ -67,7 +69,17 @@ public class LearningString {
         System.out.println(password4.charAt(0));
 
         System.out.println(password4.length());
-        
+
+        String str = "Hello:podar:world";
+
+        String str2 = "Hello world";
+
+        System.out.println(str == str2); // This prints true
+
+        System.out.println(str.equals(str2)); // This prints true
+
+        System.out.println(Arrays.toString(str.split(":")));
+
     }
 
 }
