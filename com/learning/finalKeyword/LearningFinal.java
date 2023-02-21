@@ -1,3 +1,4 @@
+package com.learning.finalKeyword;
 import java.util.Scanner;
 
 public class LearningFinal {
@@ -10,7 +11,11 @@ public class LearningFinal {
 
     public static void main(String[] args) {
 
-        System.out.printf("Name: " + (name.intern()) + (name == "Hello") + " " + age + " " + size);
+//        System.out.print("Name: " + name.intern() + (name == "Hello") + " " + age + " " + size);
+
+        System.out.print("Name: " + (name == "Hello") + " " + age + " " + size);
+
+        System.out.println("Hello".getClass());
 
     }
 
