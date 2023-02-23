@@ -6,9 +6,19 @@ public class LearningString {
 
     public static void main(String[] args) {
 
-        checkSCP();
+//        checkSCP();
 
-        checkImmutability();
+//        checkImmutability();
+
+        String []names = {"m","i","h","i","r"};
+
+        String str = "m";
+
+        System.out.println(str == names[0]);
+
+        String str2 = "";
+
+        System.out.println(str2);
 
     }
 

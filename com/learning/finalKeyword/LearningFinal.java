@@ -13,7 +13,7 @@ public class LearningFinal {
 
     public static void main(String[] args) {
 
-//        System.out.print("Name: " + name.intern() + (name == "Hello") + " " + age + " " + size);
+        System.out.print("Name: " + name.intern() + (name == "Hello") + " " + age + " " + size);
 
         System.out.print("Name: " + (name == "Hello") + " " + age + " " + size);
 
@@ -24,6 +24,10 @@ public class LearningFinal {
         str.append(" L. Agrawal");
 
         System.out.println(str);
+
+//        String s = "Hello";
+//
+//        System.out.println(s == getName());
 
     }
 
@@ -38,6 +42,8 @@ public class LearningFinal {
         String s1 = "Hel";
 
         String s2 = "lo";
+
+//        String s3 = s1 + s2;
 
         return s1 + s2;
 
