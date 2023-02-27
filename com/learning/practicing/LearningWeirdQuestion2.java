@@ -9,41 +9,42 @@ interface DeclareStuff{
 
 }
 
-class TestDeclare implements DeclareStuff{
-
-    int i;
-
-    String str;
-
-    TestDeclare(){
-//        this();
-    }
-    public static void main(String[] args) {
-
-        TestDeclare t = new TestDeclare();
-
-        System.out.println(Arrays.toString(new int[5]));
-
-        System.out.println(t.i + " " + t.str);
-
-        int x = 5;
-
-        new TestDeclare().doStuff(++x);
-
-    }
-
-
-    //below will be error due visibility issues
-    @Override
-    void doStuff(int s) {
-
-        s += EASY + ++s;
-
-        System.out.println("s: " + s);
-
-    }
-
-}
+//class TestDeclare implements DeclareStuff{
+//
+//    int i;
+//
+//    String str;
+//
+//    //Below this() causes recursive constructor calls and causes compilation error
+//    TestDeclare(){
+////        this();
+//    }
+//    public static void main(String[] args) {
+//
+//        TestDeclare t = new TestDeclare();
+//
+//        System.out.println(Arrays.toString(new int[5]));
+//
+//        System.out.println(t.i + " " + t.str);
+//
+//        int x = 5;
+//
+//        new TestDeclare().doStuff(++x);
+//
+//    }
+//
+//
+//    //below will be error due visibility issues
+//    @Override
+//    void doStuff(int s) {
+//
+//        s += EASY + ++s;
+//
+//        System.out.println("s: " + s);
+//
+//    }
+//
+//}
 
 public class LearningWeirdQuestion2 {
 

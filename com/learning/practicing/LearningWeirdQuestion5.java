@@ -36,8 +36,30 @@ class B extends A{
 
 public class LearningWeirdQuestion5 {
 
-    public static void main(String[] args) {
+    public static void main(String... args) {
+
         System.out.println(new A());
+
+        final Student s = new Student(10);
+
+        final int i;
+
+        i = 0;
+
+        s.roll = 20;
+
+        System.out.println(s.roll);
+
+//        s = null;
+
     }
 
+}
+
+class Student{
+    public int roll;
+
+    Student(int r){
+        roll = r;
+    }
 }
