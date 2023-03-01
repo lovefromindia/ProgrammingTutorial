@@ -2,11 +2,18 @@ package com.learning.generics;
 
 
 class Printer<T>{
+
     T thingToPrint;
 
     Printer(T thingToPrint){
 
         this.thingToPrint =  thingToPrint;
+
+    }
+
+    void setter(T thingToPrint){
+
+        this.thingToPrint = thingToPrint;
 
     }
 
@@ -61,6 +68,9 @@ public class LearningGenericsOne {
 //        Printer<int>
         Printer<Integer> integerPrinter = new Printer<>(Integer.valueOf(45));
 
+//        integerPrinter.setter("lol");
+        Integer temp = integerPrinter.getter();
+
         System.out.println(integerPrinter.getter() == 45);
 
         VehicleCar vehicleCar = new VehicleCar("GJ06-5043",4,3999999.0);
@@ -69,6 +79,41 @@ public class LearningGenericsOne {
 
         System.out.println(vehicleCarPrinter.getter());
 
+        StringPrinter obj = new StringPrinter(2.0);
+
+        StringPrinter obj2 = new StringPrinter("String");
+
+        String str = (String)obj2.getter();
+
+        obj.print();
+
+        obj2.print();
+
     }
 
 }
+
+class StringPrinter{
+
+    private Object thingToPrint;
+
+    public StringPrinter(Object thingToPrint){
+
+        this.thingToPrint = thingToPrint;
+
+    }
+
+    public Object getter(){
+
+        return this.thingToPrint;
+
+    }
+
+    public void print(){
+
+        System.out.println("Thing is: " + thingToPrint);
+
+    }
+
+}
+

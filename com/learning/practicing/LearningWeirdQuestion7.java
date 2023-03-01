@@ -7,12 +7,13 @@ import java.util.Arrays;
 public class LearningWeirdQuestion7 {
 
 
-//    ***Below will give compilation error of InitializerError
-//    static int x[];
-//
-//    static {
-//        x[0] = 1;
-//    }
+    static int x[];
+
+    static {
+
+        x[0] = 1;
+
+    }
 
 //    ***Below will give error as final static member has to be initialized
 //    static final int i;

@@ -58,6 +58,7 @@ public class LearningWeirdQuestion2 {
         float a = getMethod();
 
         StringBuilder sb1 = new StringBuilder("Mihir");
+
         StringBuilder sb2 = new StringBuilder("Mihir");
 
         System.out.println(sb1.compareTo(sb2));
