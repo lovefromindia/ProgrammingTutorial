@@ -32,15 +32,24 @@ public class LearningWeirdQuestion10 {
     }
 
     public static void main(String[] args) {
+
         try {
+
             ABC ref = new DEF();
+
             ref = null;
+
             System.gc();
+
 //            check(100d);
         }catch (Exception e){
+
             System.out.println(e.getMessage());
+
             System.out.println(e.getStackTrace());
+
         }
+
     }
 
 }
@@ -64,7 +73,11 @@ class DEF extends ABC{
     }
     @Override
     protected void finalize(){
+
         System.out.println("DEF destroying");
+
         super.finalize();
+
     }
+
 }
