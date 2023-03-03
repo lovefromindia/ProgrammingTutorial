@@ -46,6 +46,8 @@ public class CollectionsArrayList {
 
         Queue<Integer> q = new PriorityQueue<>();
 
+        Object[] strArr = new String[10];
+        
     }
 
 }
