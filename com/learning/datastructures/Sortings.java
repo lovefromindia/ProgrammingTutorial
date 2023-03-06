@@ -39,7 +39,6 @@ class MergeSort{
         if(startIndex >= endIndex)
             return;
 
-        System.out.println(startIndex + " " + endIndex);
         int mid = (startIndex+endIndex)/2;
 
         //divide and recursive calls to sort
@@ -71,13 +70,6 @@ class MergeSort{
             mergedArray.add(arr.get(j));
             j++;
         }
-
-        System.out.println("here");
-        for (T var:
-             mergedArray) {
-            System.out.println(var);
-        }
-        System.out.println("here");
 
         for(int k = 0;k < mergedArray.size();k++){
             arr.set(k+startIndex,mergedArray.get(k));
