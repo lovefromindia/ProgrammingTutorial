@@ -18,36 +18,14 @@ public class CollectionsArrayList {
 
         }
 
+        list.add(Integer.valueOf(3),9);
+
         for (int i = 0; i < list.size(); i++) {
 
             System.out.print(list.get(i));
 
         }
 
-        System.out.println();
-
-        for (Integer i :list) {
-
-            System.out.print(i);
-
-        }
-
-        System.out.println();
-
-        Iterator<Integer> it = list.iterator();
-
-        Iterator<Integer> it2 = list.listIterator(1);
-
-        while(it2.hasNext()){
-
-            System.out.print(it2.next());
-
-        }
-
-        Queue<Integer> q = new PriorityQueue<>();
-
-        Object[] strArr = new String[10];
-        
     }
 
 }
