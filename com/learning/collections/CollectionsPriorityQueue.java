@@ -9,7 +9,9 @@ class StringComparator implements Comparator<String>{
 
     @Override
     public int compare(String s, String t) {
+
         return -1 * s.compareTo(t);
+
     }
 }
 

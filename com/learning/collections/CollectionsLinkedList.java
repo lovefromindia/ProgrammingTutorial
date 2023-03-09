@@ -10,6 +10,8 @@ public class CollectionsLinkedList {
 
         Queue<String> linkedList = new LinkedList<>();
 
+        linkedList.offer(null);
+
         linkedList.offer("Mihir");
 
         linkedList.offer("SOS");
