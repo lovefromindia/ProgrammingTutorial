@@ -22,7 +22,7 @@ public class ArrayIterator {
 
                     Integer val = itr.next();
 
-//                    System.out.println(itr.next());
+                    System.out.println(itr.next());
 
                     arr.remove(0);
 

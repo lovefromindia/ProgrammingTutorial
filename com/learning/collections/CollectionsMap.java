@@ -48,7 +48,7 @@ public class CollectionsMap {
     public static void main(String[] args) {
 
         Map<Teacher, Double> salaryMap = new TreeMap<>(new TeacherComparator());
-        salaryMap.put(null,1000.0);
+//        salaryMap.put(null,1000.0);
         salaryMap.put(new Teacher("Mihir",800),1200.0);
         salaryMap.put(new Teacher("Mihir",300),1000.0);
         salaryMap.put(new Teacher("Mahir",400),500.0);

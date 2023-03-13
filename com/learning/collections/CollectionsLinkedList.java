@@ -1,8 +1,15 @@
 package com.learning.collections;
 
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
+
+class A{
+    public void m1(){}
+}
+
+class B extends A{
+    public synchronized void m1(){}
+}
+
 
 public class CollectionsLinkedList {
 
@@ -23,6 +30,13 @@ public class CollectionsLinkedList {
         System.out.println(linkedList.poll());
 
         System.out.println(linkedList);
+
+        List<String> list = new LinkedList<>();
+        list.add("Mihir");
+        list.add("Mahir");
+        list.add("Mhir");
+        ListIterator<String> it = list.listIterator();
+
 
     }
 
