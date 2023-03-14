@@ -14,11 +14,11 @@ public class PingApp {
 
 
 
-    private static final int DEFAULT_RETRYINTERVAL = 100;
-    private static final int MIN_RETRYINTERVAL = 20;
+    private static final int DEFAULT_RETRYINTERVAL = 25;
+    private static final int MIN_RETRYINTERVAL = 15;
     private static final int MAX_RETRYINTERVAL = 1000;
 
-    private static final int DEFAULT_RESPONSETIMEOUT = 300;
+    private static final int DEFAULT_RESPONSETIMEOUT = 500;
     private static final int MIN_RESPONSETIMEOUT = 10;
     private static final int MAX_RESPONSETIMEOUT = 1000;
 
@@ -94,25 +94,36 @@ public class PingApp {
 
     public static void main(String[] args) {
 
+        String targetIp;
+        int retry=DEFAULT_RETRY,retryInterval=DEFAULT_RETRYINTERVAL,responseTimeOut=DEFAULT_RESPONSETIMEOUT;
+
         try {
 
             BufferedReader userInputReader = new BufferedReader(new InputStreamReader(System.in));
 
             System.out.println("Enter IP Address");
 
-            String targetIp = userInputReader.readLine();
+            targetIp = userInputReader.readLine();
 
-            System.out.println("Number of Retries?[Min:"+MIN_RETRY+",Max:"+MAX_RETRY+"]");
+            System.out.println("Use Default Values?[Y/N]");
 
-            int retry = Math.min(Math.max(Integer.valueOf(userInputReader.readLine()),MIN_RETRY),MAX_RETRY);
+            String useDefaultValues = userInputReader.readLine();
 
-            System.out.println("Time Interval between each Retry?[Min:"+MIN_RETRYINTERVAL+",Max:"+MAX_RETRYINTERVAL+"]");
+            if(useDefaultValues.toLowerCase().equals("n")) {
 
-            int retryInterval = Math.min(Math.max(Integer.valueOf(userInputReader.readLine()),MIN_RETRYINTERVAL),MAX_RETRYINTERVAL);
+                System.out.println("Number of Retries?[Min:" + MIN_RETRY + ",Max:" + MAX_RETRY + "]");
 
-            System.out.println("Timeout For Each Response?[Min:"+MIN_RESPONSETIMEOUT+",Max:"+MAX_RESPONSETIMEOUT+"]");
+                retry = Math.min(Math.max(Integer.valueOf(userInputReader.readLine()), MIN_RETRY), MAX_RETRY);
 
-            int responseTimeOut = Math.min(Math.max(Integer.valueOf(userInputReader.readLine()),MIN_RESPONSETIMEOUT),MAX_RESPONSETIMEOUT);
+                System.out.println("Time Interval between each Retry?[Min:" + MIN_RETRYINTERVAL + ",Max:" + MAX_RETRYINTERVAL + "]");
+
+                retryInterval = Math.min(Math.max(Integer.valueOf(userInputReader.readLine()), MIN_RETRYINTERVAL), MAX_RETRYINTERVAL);
+
+                System.out.println("Timeout For Each Response?[Min:" + MIN_RESPONSETIMEOUT + ",Max:" + MAX_RESPONSETIMEOUT + "]");
+
+                responseTimeOut = Math.min(Math.max(Integer.valueOf(userInputReader.readLine()), MIN_RESPONSETIMEOUT), MAX_RESPONSETIMEOUT);
+
+            }
 
             System.out.println(PingExecutor.checkIfUp(targetIp,retry,retryInterval,responseTimeOut));
 
