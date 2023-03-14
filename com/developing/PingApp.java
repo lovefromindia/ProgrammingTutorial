@@ -9,7 +9,19 @@ import java.util.Arrays;
 public class PingApp {
 
     private static final int DEFAULT_RETRY = 3;
+    private static final int MIN_RETRY = 0;
+    private static final int MAX_RETRY = 20;
+
+
+
     private static final int DEFAULT_RETRYINTERVAL = 100;
+    private static final int MIN_RETRYINTERVAL = 20;
+    private static final int MAX_RETRYINTERVAL = 1000;
+
+    private static final int DEFAULT_RESPONSETIMEOUT = 300;
+    private static final int MIN_RESPONSETIMEOUT = 10;
+    private static final int MAX_RESPONSETIMEOUT = 1000;
+
 
     /**
      * Private Static Class which actually checks whether the host is up or down
@@ -17,7 +29,7 @@ public class PingApp {
      */
     private static class PingExecutor {
 
-        private static String[] getCommand(String targetIp, int numberOfRetry,int retryInterval){
+        private static String[] getCommand(String targetIp, int numberOfRetry,int retryInterval,int responseTimeOut){
 
             ArrayList<String> command = new ArrayList<>();
 
@@ -26,6 +38,8 @@ public class PingApp {
             command.add("-r"+numberOfRetry);
 
             command.add("-i"+retryInterval);
+
+            command.add("-t"+responseTimeOut);
 
             command.add(targetIp);
 
@@ -41,14 +55,18 @@ public class PingApp {
 
         }
 
-        public static boolean checkIfUp(String targetIp,int numberOfRetry,int retryInterval) throws IOException {
+        public static boolean checkIfUp(String targetIp,int numberOfRetry,int retryInterval,int responseTimeOut) throws IOException, InterruptedException {
 
             ProcessBuilder processBuilder = new ProcessBuilder();
 
-            System.out.println(Arrays.toString(getCommand(targetIp,numberOfRetry,retryInterval)));
-            processBuilder.command(getCommand(targetIp,numberOfRetry,retryInterval));
+            System.out.println(Arrays.toString(getCommand(targetIp,numberOfRetry,retryInterval,responseTimeOut)));
+            processBuilder.command(getCommand(targetIp,numberOfRetry,retryInterval,responseTimeOut));
+
+            processBuilder.redirectErrorStream(true);
 
             Process process = processBuilder.start();
+
+            process.waitFor();
 
             StringBuilder pingOutput = new StringBuilder();
 
@@ -56,13 +74,9 @@ public class PingApp {
 
             String line;
 
-            while (process.isAlive()) {
+            while ((line = reader.readLine()) != null) {
 
-                line = reader.readLine();
-
-                if(line != null)
-
-                    pingOutput.append(line);
+                pingOutput.append(line);
 
             }
 
@@ -70,9 +84,9 @@ public class PingApp {
 
         }
 
-        public static boolean checkIfUp(String targetIp) throws IOException{
+        public static boolean checkIfUp(String targetIp) throws IOException, InterruptedException {
 
-            return checkIfUp(targetIp,DEFAULT_RETRY,DEFAULT_RETRYINTERVAL);
+            return checkIfUp(targetIp,DEFAULT_RETRY,DEFAULT_RETRYINTERVAL,DEFAULT_RESPONSETIMEOUT);
 
         }
 
@@ -88,16 +102,19 @@ public class PingApp {
 
             String targetIp = userInputReader.readLine();
 
-            System.out.println("Number of Retries?[Max 5]");
+            System.out.println("Number of Retries?[Min:"+MIN_RETRY+",Max:"+MAX_RETRY+"]");
 
-            int retry = Math.min(Math.max(Integer.valueOf(userInputReader.readLine()),1),5);
+            int retry = Math.min(Math.max(Integer.valueOf(userInputReader.readLine()),MIN_RETRY),MAX_RETRY);
 
-            System.out.println("Time Interval between each Retry?");
+            System.out.println("Time Interval between each Retry?[Min:"+MIN_RETRYINTERVAL+",Max:"+MAX_RETRYINTERVAL+"]");
 
-            int retryInterval = Math.min(Math.max(Integer.valueOf(userInputReader.readLine()),1),10);
+            int retryInterval = Math.min(Math.max(Integer.valueOf(userInputReader.readLine()),MIN_RETRYINTERVAL),MAX_RETRYINTERVAL);
 
-            System.out.println(PingExecutor.checkIfUp(targetIp,retry,retryInterval));
+            System.out.println("Timeout For Each Response?[Min:"+MIN_RESPONSETIMEOUT+",Max:"+MAX_RESPONSETIMEOUT+"]");
 
+            int responseTimeOut = Math.min(Math.max(Integer.valueOf(userInputReader.readLine()),MIN_RESPONSETIMEOUT),MAX_RESPONSETIMEOUT);
+
+            System.out.println(PingExecutor.checkIfUp(targetIp,retry,retryInterval,responseTimeOut));
 
         } catch (Exception e) {
 
