@@ -25,7 +25,7 @@ public class PingApp {
 
     /**
      * Private Static Class which actually checks whether the host is up or down
-     * contains checkIfUp() method which takes three values: ip, numberofretries, timeintervalbetweenretries
+     * contains checkIfUp() method which takes four values: ip, numberofretries, timeintervalbetweenretries
      */
     private static class PingExecutor {
 
@@ -60,27 +60,29 @@ public class PingApp {
             ProcessBuilder processBuilder = new ProcessBuilder();
 
             System.out.println(Arrays.toString(getCommand(targetIp,numberOfRetry,retryInterval,responseTimeOut)));
+
             processBuilder.command(getCommand(targetIp,numberOfRetry,retryInterval,responseTimeOut));
 
             processBuilder.redirectErrorStream(true);
 
             Process process = processBuilder.start();
 
-            process.waitFor();
+            System.out.println(process.waitFor());
 
             StringBuilder pingOutput = new StringBuilder();
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))){
 
-            String line;
+                String line;
 
-            while ((line = reader.readLine()) != null) {
+                while ((line = reader.readLine()) != null) {
 
-                pingOutput.append(line);
+                    pingOutput.append(line);
 
+                }
+
+                return checkIfAlive(pingOutput.toString());
             }
-
-            return checkIfAlive(pingOutput.toString());
 
         }
 
