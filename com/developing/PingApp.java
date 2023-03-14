@@ -61,6 +61,7 @@ public class PingApp {
 
                 command = commandList.toArray(new String[commandList.size()]);
 
+                //for logging
                 System.out.println(Arrays.toString(command));
 
                 processBuilder.command(command);
@@ -89,6 +90,7 @@ public class PingApp {
 
                 }
 
+                //for logging
                 System.out.println("Ping: " + pingOutput.toString());
 
                 return pingOutput.toString().contains("alive");
