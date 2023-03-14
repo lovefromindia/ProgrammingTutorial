@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class PingApp {
 
-    private static final int DEFAULT_RETRY = 3;
+    private static final int DEFAULT_RETRY = 4;
     private static final int MIN_RETRY = 0;
     private static final int MAX_RETRY = 20;
 
@@ -29,49 +29,57 @@ public class PingApp {
      */
     private static class PingExecutor {
 
-        private static String[] getCommand(String targetIp, int numberOfRetry,int retryInterval,int responseTimeOut){
+        public static boolean checkIfUp(String targetIp,int numberOfRetry,int retryInterval,int responseTimeOut) {
 
-            ArrayList<String> command = new ArrayList<>();
+            BufferedReader reader = null;
 
-            command.add("fping");
+            ProcessBuilder processBuilder = null;
 
-            command.add("-r"+numberOfRetry);
+            ArrayList<String> commandList = null;
 
-            command.add("-i"+retryInterval);
+            String[] command = null;
 
-            command.add("-t"+responseTimeOut);
+            Process process = null;
 
-            command.add(targetIp);
+            StringBuilder pingOutput = null;
 
-            return command.toArray(new String[command.size()]);
+            try{
 
-        }
+                processBuilder = new ProcessBuilder();
 
-        private static boolean checkIfAlive(String pingOuput){
+                 commandList = new ArrayList<>();
 
-            System.out.println(pingOuput);
+                commandList.add("fping");
 
-            return pingOuput.contains("alive");
+                commandList.add("-r" + numberOfRetry);
 
-        }
+                commandList.add("-i" + retryInterval);
 
-        public static boolean checkIfUp(String targetIp,int numberOfRetry,int retryInterval,int responseTimeOut) throws IOException, InterruptedException {
+                commandList.add("-t" + responseTimeOut);
 
-            ProcessBuilder processBuilder = new ProcessBuilder();
+                commandList.add(targetIp);
 
-            System.out.println(Arrays.toString(getCommand(targetIp,numberOfRetry,retryInterval,responseTimeOut)));
+                command = commandList.toArray(new String[commandList.size()]);
 
-            processBuilder.command(getCommand(targetIp,numberOfRetry,retryInterval,responseTimeOut));
+                System.out.println(Arrays.toString(command));
 
-            processBuilder.redirectErrorStream(true);
+                processBuilder.command(command);
 
-            Process process = processBuilder.start();
+                processBuilder.redirectErrorStream(true);
 
-            System.out.println(process.waitFor());
+                process = processBuilder.start();
 
-            StringBuilder pingOutput = new StringBuilder();
+                reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))){
+                int pingCommandExitCode = process.waitFor();
+
+                if(pingCommandExitCode != 0 && pingCommandExitCode != 1){
+
+                    throw new Exception("Ping Process has been exited with code " + pingCommandExitCode);
+
+                }
+
+                pingOutput = new StringBuilder();
 
                 String line;
 
@@ -81,14 +89,31 @@ public class PingApp {
 
                 }
 
-                return checkIfAlive(pingOutput.toString());
+                System.out.println("Ping: " + pingOutput.toString());
+
+                return pingOutput.toString().contains("alive");
+
+            }catch(Exception e){
+
+                System.out.println(e.getMessage());
+
+            }finally {
+
+                try {
+
+                    reader.close();
+
+                } catch (IOException e) {
+
+                    System.out.println(e.getMessage());
+
+                }
+
             }
 
-        }
+            System.out.println("Try again...");
 
-        public static boolean checkIfUp(String targetIp) throws IOException, InterruptedException {
-
-            return checkIfUp(targetIp,DEFAULT_RETRY,DEFAULT_RETRYINTERVAL,DEFAULT_RESPONSETIMEOUT);
+            return false;
 
         }
 
@@ -97,6 +122,7 @@ public class PingApp {
     public static void main(String[] args) {
 
         String targetIp;
+
         int retry=DEFAULT_RETRY,retryInterval=DEFAULT_RETRYINTERVAL,responseTimeOut=DEFAULT_RESPONSETIMEOUT;
 
         try {
@@ -106,26 +132,6 @@ public class PingApp {
             System.out.println("Enter IP Address");
 
             targetIp = userInputReader.readLine();
-
-            System.out.println("Use Default Values?[Y/N]");
-
-            String useDefaultValues = userInputReader.readLine();
-
-            if(useDefaultValues.toLowerCase().equals("n")) {
-
-                System.out.println("Number of Retries?[Min:" + MIN_RETRY + ",Max:" + MAX_RETRY + "]");
-
-                retry = Math.min(Math.max(Integer.valueOf(userInputReader.readLine()), MIN_RETRY), MAX_RETRY);
-
-                System.out.println("Time Interval between each Retry?[Min:" + MIN_RETRYINTERVAL + ",Max:" + MAX_RETRYINTERVAL + "]");
-
-                retryInterval = Math.min(Math.max(Integer.valueOf(userInputReader.readLine()), MIN_RETRYINTERVAL), MAX_RETRYINTERVAL);
-
-                System.out.println("Timeout For Each Response?[Min:" + MIN_RESPONSETIMEOUT + ",Max:" + MAX_RESPONSETIMEOUT + "]");
-
-                responseTimeOut = Math.min(Math.max(Integer.valueOf(userInputReader.readLine()), MIN_RESPONSETIMEOUT), MAX_RESPONSETIMEOUT);
-
-            }
 
             System.out.println(PingExecutor.checkIfUp(targetIp,retry,retryInterval,responseTimeOut));
 
