@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class PingApp {
 
-    private static final int DEFAULT_RETRY = 4;
+    private static final int DEFAULT_RETRY = 5;
     private static final int MIN_RETRY = 0;
     private static final int MAX_RETRY = 20;
 
@@ -95,9 +95,9 @@ public class PingApp {
 
                 return pingOutput.toString().contains("alive");
 
-            }catch(Exception e){
+            }catch(Exception exception){
 
-                System.out.println(e.getMessage());
+                System.out.println(exception.getMessage());
 
             }finally {
 
@@ -105,9 +105,9 @@ public class PingApp {
 
                     reader.close();
 
-                } catch (IOException e) {
+                } catch (IOException exception) {
 
-                    System.out.println(e.getMessage());
+                    System.out.println(exception.getMessage());
 
                 }
 
@@ -137,9 +137,9 @@ public class PingApp {
 
             System.out.println(PingExecutor.checkIfUp(targetIp,retry,retryInterval,responseTimeOut));
 
-        } catch (Exception e) {
+        } catch (Exception exception) {
 
-            System.out.println(e.getMessage());
+            System.out.println(exception.getMessage());
 
         }
 
