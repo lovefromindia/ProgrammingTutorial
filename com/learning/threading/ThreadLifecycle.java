@@ -1,9 +1,17 @@
 package com.learning.threading;
 
+class MyThread extends Thread{
+    @Override
+    public void run() {
+        System.out.println("My thread, My rules");
+    }
+}
 public class ThreadLifecycle {
 
     public static void main(String[] args) {
 
+        Thread t1 = new Thread("mythread");
+        new MyThread().start();
         Thread t = new Thread(()->{
             System.out.println("I have started...");
             System.out.println("I have ended...");
