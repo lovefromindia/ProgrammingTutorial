@@ -52,17 +52,18 @@ public class UBlockingQueue {
     }
 
     @Override
-    public String toString() {
+    public  String toString() {
         return "UBlockingQueue{" +
                 "container=" + container +
                 ", maxSize=" + maxSize +
                 '}';
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+
+        Thread.currentThread().join();
 
         UBlockingQueue uBlockingQueue = new UBlockingQueue(5);
-
         new Thread(()->{
             uBlockingQueue.poll();
         },"Consumer").start();
