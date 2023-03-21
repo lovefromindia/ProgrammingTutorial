@@ -38,7 +38,7 @@ public class ThreadLifecycle {
         try {
             t.join();
             t.run();
-            t.start();
+//            t.start();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

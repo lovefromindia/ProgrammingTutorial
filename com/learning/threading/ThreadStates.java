@@ -1,11 +1,15 @@
 package com.learning.threading;
 
-import java.io.BufferedReader;
 import java.util.Scanner;
 
-public class ThreadStates {
+
+public class ThreadStates implements Runnable{
 
     public static void main(String[] args) {
+
+//        ThreadStates t1 = new ThreadStates();
+//        t1.start();
+
 
         Thread t1 = new Thread(()->{
 
@@ -40,4 +44,8 @@ public class ThreadStates {
 
     }
 
+    @Override
+    public void run() {
+
+    }
 }
