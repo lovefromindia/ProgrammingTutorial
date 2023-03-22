@@ -41,10 +41,12 @@ public final class ProvisionApp {
 
     private static PriorityQueue<Query> taskQueue;
 
+    //sort the taskQueue by timestamp in increasing order
     static{
         taskQueue = new PriorityQueue<>((obj, other) -> obj.getTimeStamp()-other.getTimeStamp()<0L?-1:1);
     }
 
+    //register ip and interval
     static boolean provisionIp(String ip, int interval){
         try {
             taskQueue.add(new Query(Instant.now().getEpochSecond(), ip, interval));
@@ -55,6 +57,7 @@ public final class ProvisionApp {
         return true;
     }
 
+    //start the polling
     static void start(){
         while(!taskQueue.isEmpty()){
             Query q = taskQueue.peek();
