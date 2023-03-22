@@ -1,13 +1,11 @@
 package com.developing;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.*;
 
-public class PingApp {
-    public final int checkStatus(String ip){
+public final class PingApp {
+    public static final int checkStatus(String ip){
 
         try {
             if (!validateIP(ip)) {
@@ -31,26 +29,32 @@ public class PingApp {
                 result.append(line);
             }
 
-            Map<String,String> results = new HashMap<>();
-            Arrays.stream(result.toString().split(":")[1].split(",")).forEach(s -> {
-                String[] keyValues = s.split("=");
-                if(keyValues.length==2){
-                    String[] keys = keyValues[0].split("/");
-                    String[] values = keyValues[1].split("/");
-                    for (int i = 0; i < keys.length; i++) {
-                        results.put(keys[i],values[i]);
-                    }
-                }
-            });
-            return ;
-
+            return parseResult(result).get("%loss").equals("0%")?1:0;
         }catch(Exception exception){
             System.out.println(exception.getMessage());
             return -1;
         }
     }
 
-    private List<String> getCommand(String ip) {
+    private static Map<String,String> parseResult(StringBuilder result) {
+        Map<String,String> results = new HashMap<>();
+        Arrays.stream(result.toString()
+                        .split(":")[1]
+                        .split(","))
+                .forEach(s -> {
+            String[] keyValues = s.split("=");
+            if(keyValues.length==2){
+                String[] keys = keyValues[0].split("/");
+                String[] values = keyValues[1].split("/");
+                for (int i = 0; i < keys.length; i++) {
+                    results.put(keys[i].strip(),values[i].strip());
+                }
+            }
+        });
+        return results;
+    }
+
+    private static List<String> getCommand(String ip) {
         List<String> command = new ArrayList<>();
         command.add("fping");
         command.add("-c3");
@@ -59,7 +63,7 @@ public class PingApp {
         return command;
     }
 
-    private final boolean validateIP(String ip){
+    private static final boolean validateIP(String ip){
         return true;
     }
 
