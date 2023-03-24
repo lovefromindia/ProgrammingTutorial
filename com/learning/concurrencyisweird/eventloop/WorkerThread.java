@@ -3,10 +3,14 @@ package com.learning.concurrencyisweird.eventloop;
 import java.util.Queue;
 
 public class WorkerThread extends Thread {
-    volatile Queue<Runnable> taskQueue = null;
-    Runnable currentTask = null;
-    volatile boolean acceptingTask = true;
 
+    //volatile so that change is visible
+    volatile Queue<Runnable> taskQueue = null;
+    volatile boolean acceptingTask = true;
+    Runnable currentTask = null;
+
+
+    //locks on the taskQueue in the EventLoop
     WorkerThread(Queue<Runnable> taskQueue){
         this.taskQueue = taskQueue;
     }
@@ -23,6 +27,11 @@ public class WorkerThread extends Thread {
                 currentTask = taskQueue.poll();
                 taskQueue.notifyAll();
             }
+
+            //this is outside synchronized block so that
+            //other workerThreads don't have to wait for
+            //this thread (for acquiring lock on taskQueue)
+            // to run the task and can run next task in the queue (if any)
             currentTask.run();
         }
     }
