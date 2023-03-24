@@ -10,10 +10,17 @@ public class WorkerThread extends Thread {
     Runnable currentTask = null;
 
 
-    //locks on the taskQueue in the EventLoop
+    //so that it can acquire lock on the taskQueue
+    // given by the EventLoop for getting the task
+    // from the queue
     WorkerThread(Queue<Runnable> taskQueue){
         this.taskQueue = taskQueue;
     }
+
+    //if user has shutdown the eventLoop
+    //then all the workerThreads will have acceptingTask = false
+    //in that case once the taskQueue becomes empty
+    // both conditions turns false and workerThread stops running
     public void run() {
         while(acceptingTask || taskQueue.size()>0) {
             synchronized (taskQueue) {
