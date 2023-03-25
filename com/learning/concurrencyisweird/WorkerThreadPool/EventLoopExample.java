@@ -1,10 +1,10 @@
-package com.learning.concurrencyisweird.eventloop;
+package com.learning.concurrencyisweird.WorkerThreadPool;
 
 public class EventLoopExample {
 
     public static void main(String[] args) {
 
-        EventLoop eventLoop = new EventLoop(4);
+        WorkerThreadPool eventLoop = new WorkerThreadPool(4);
         for(int i = 0;i < 10;i++){
             int a = i;
             eventLoop.submit(()->{
