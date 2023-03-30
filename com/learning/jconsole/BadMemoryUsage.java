@@ -24,10 +24,11 @@ public class BadMemoryUsage {
     public static void main(String[] args) throws InterruptedException {
 
         ArrayList<Map<String,String>> mapArrayList = new ArrayList<>();
-        for(int i = 0;i < 90000000;i++){
+        for(int i = 0;i < 900000;i++) {
             mapArrayList.add(new HashMap<String, String>());
         }
 
+        System.out.println("here");
 
         //deadlock
         new Thread(()->method1()).start();
